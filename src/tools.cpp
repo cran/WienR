@@ -55,7 +55,7 @@ double lnnorm(double z)
         double z2, y, s, p1, q1, p2, q2, t, a1, a2 ;
         double n, m ;
 
-	if (z==0.0e0) return(log(0.50e0)) ;
+	if (z==0.0e0) return(std::log(0.50e0)) ;
 
 	if (z > LNNORM_MAX_X) return(0.0e0);
         if (z <= LNNORM_MIN_X) return(-0.5e0*z*z);
@@ -82,8 +82,8 @@ double lnnorm(double z)
                         z *= ((z2)/ (n)) ;
                         s+=z ;
                 }
-                if (lower) return(log(0.50e0-s)) ;
-                return(log(0.50e0+s)) ;
+                if (lower) return(std::log(0.50e0-s)) ;
+                return(std::log(0.50e0+s)) ;
         }
 
         a1=2.0e0 ;
@@ -116,13 +116,13 @@ double lnnorm(double z)
                 }
  		            t = p2/q2;
         }
-        t = lower ? log(t) - 0.5*z2 - log(SQR2PI) : log1p(-y*t);
+        t = lower ? std::log(t) - 0.5*z2 - std::log(SQR2PI) : log1p(-y*t);
         return(t) ;
 }
 
 double logMill(double x) {
 	double m;
-	if (x > 1.0e5) return -log(x);
+	if (x > 1.0e5) return -std::log(x);
 	m = lnnorm(-x) - lognormal(x);
 	return m;
 }
@@ -149,7 +149,7 @@ double coth(double x) {
 
 double lower_bound_time(double a, double vn, double wn) {
 	double temp, amw = a * (1 - wn);
-	if (fabs(vn) < 1e-5) {
+	if (std::fabs(vn) < 1e-5) {
 		temp = (pow(a, 2) - pow(amw, 2)) / 3.0;
 
 	}
@@ -351,18 +351,18 @@ static inline int cheb_eval_e(const cheb_series * cs,
   for(j = cs->order; j>=1; j--) {
     double temp = d;
     d = y2*d - dd + cs->c[j];
-    e += fabs(y2*temp) + fabs(dd) + fabs(cs->c[j]);
+    e += std::fabs(y2*temp) + std::fabs(dd) + std::fabs(cs->c[j]);
     dd = temp;
   }
 
   {
     double temp = d;
     d = y*d - dd + 0.5 * cs->c[0];
-    e += fabs(y*temp) + fabs(dd) + 0.5 * fabs(cs->c[0]);
+    e += std::fabs(y*temp) + std::fabs(dd) + 0.5 * std::fabs(cs->c[0]);
   }
 
   result->val = d;
-  result->err = GSL_DBL_EPSILON * e + fabs(cs->c[cs->order]);
+  result->err = GSL_DBL_EPSILON * e + std::fabs(cs->c[cs->order]);
 
   return GSL_SUCCESS;
 }
@@ -601,7 +601,7 @@ inline static double erfc8(double x)
 }
 
 int gsl_sf_erfc_e(double x, gsl_sf_result * result) {
-  const double ax = fabs(x);
+  const double ax = std::fabs(x);
   double e_val, e_err;
 
   /* CHECK_POINTER(result) */
@@ -619,7 +619,7 @@ int gsl_sf_erfc_e(double x, gsl_sf_result * result) {
     gsl_sf_result c;
     cheb_eval_e(&erfc_x15_cs, t, &c);
     e_val = ex2 * c.val;
-    e_err = ex2 * (c.err + 2.0*fabs(x)*GSL_DBL_EPSILON);
+    e_err = ex2 * (c.err + 2.0*std::fabs(x)*GSL_DBL_EPSILON);
   }
   else if(ax < 10.0) {
     double exterm = exp(-x*x) / ax;
@@ -627,22 +627,22 @@ int gsl_sf_erfc_e(double x, gsl_sf_result * result) {
     gsl_sf_result c;
     cheb_eval_e(&erfc_x510_cs, t, &c);
     e_val = exterm * c.val;
-    e_err = exterm * (c.err + 2.0*fabs(x)*GSL_DBL_EPSILON + GSL_DBL_EPSILON);
+    e_err = exterm * (c.err + 2.0*std::fabs(x)*GSL_DBL_EPSILON + GSL_DBL_EPSILON);
   }
   else {
     e_val = erfc8(ax);
-    e_err = (x*x + 1.0) * GSL_DBL_EPSILON * fabs(e_val);
+    e_err = (x*x + 1.0) * GSL_DBL_EPSILON * std::fabs(e_val);
   }
 
   if(x < 0.0) {
     result->val  = 2.0 - e_val;
     result->err  = e_err;
-    result->err += 2.0 * GSL_DBL_EPSILON * fabs(result->val);
+    result->err += 2.0 * GSL_DBL_EPSILON * std::fabs(result->val);
   }
   else {
     result->val  = e_val;
     result->err  = e_err;
-    result->err += 2.0 * GSL_DBL_EPSILON * fabs(result->val);
+    result->err += 2.0 * GSL_DBL_EPSILON * std::fabs(result->val);
   }
 
   return GSL_SUCCESS;

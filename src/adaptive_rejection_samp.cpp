@@ -44,7 +44,7 @@ void generate_intervals(int& k, double totallow, std::vector<point> h, std::vect
 			else {
 				t = (fun_upper(k, upper[i].z, upper));
 			}
-		t -= log(fabs(upper[i].slope));
+		t -= std::log(std::fabs(upper[i].slope));
 
 		sum = logsum(sum, t);
 		s.push_back(sum);
@@ -103,7 +103,7 @@ bool update_intervals(int k, double totallow, point new_point, std::vector<point
 				else {
 					t = (fun_upper(k, upper[j].z, upper));
 				}
-			t -= log(fabs(upper[j].slope));
+			t -= std::log(std::fabs(upper[j].slope));
 			if (j == 0) sum = t;
 			else sum = logsum(sum, t);
 			if (j != i) s[j] = sum; else s.insert(s.begin() + j, sum);
@@ -153,18 +153,18 @@ double inverse_distribution(int k, double xstar, std::vector<piece> upper, std::
 		double sl = upper[k - 1].slope;
 		t = upper[k - 1].absc - upper[k - 1].center * sl + logdiff(bound * sl,
 			upper[k - 1].z * sl);
-		t -= log(fabs(sl));
+		t -= std::log(std::fabs(sl));
 		s[k - 1] = logsum(t, s[k - 2]);
 		sum = s[k - 1];
 	}
 	int j = 0;
-	double temp = log(xstar) + sum;
+	double temp = std::log(xstar) + sum;
 	while (temp > s[j]) j++;
 	if (j > k - 1) { Rprintf("Wie das?\n"); }
 
 
 	double sl = upper[j].slope;
-	double help = log(fabs(sl)); int sign = sl > 0 ? 1 : -1;
+	double help = std::log(std::fabs(sl)); int sign = sl > 0 ? 1 : -1;
 	if (std::isnan(sl)) {
 		flag = true;
 		Rprintf("slope is infinity\n");

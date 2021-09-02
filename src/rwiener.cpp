@@ -17,13 +17,13 @@ double dwiener_d(double q, double a, double vn, double wn, double leps) {
 		v = -vn;
 	}
 	else {
-		q = fabs(q);
+		q = std::fabs(q);
 		w = wn;
 		v = vn;
 	}
 
 	double q_asq = q / pow(a, 2);
-	double lg1 = (-v * a * w - (pow(v, 2)) * q / 2) - 2 * log(a);
+	double lg1 = (-v * a * w - (pow(v, 2)) * q / 2) - 2 * std::log(a);
 
 NEW:
 	ans = 0;
@@ -65,7 +65,7 @@ double dtdwiener_d(double q, double a, double v, double w, double &ld, double le
 	double q_asq = q / pow(a, 2);
 
 	double ans0 = -pow(v, 2) / 2.0;
-	double la = 2.0 * log(a);
+	double la = 2.0 * std::log(a);
 	double lg1 = -v * a * w - pow(v, 2) * q / 2.0 - la;
 	double factor = lg1 - la;
 
@@ -83,7 +83,7 @@ NEW:
 	{
 		double erg; int newsign;
 		logdtfs(q_asq, w, static_cast<int>(kss), erg, newsign);
-		ans = ans0 - 1.5 / q + newsign * exp(factor - 1.5 * M_LN2 - M_LN_SQRT_PI - 3.5 * log(q_asq) + erg - ld);
+		ans = ans0 - 1.5 / q + newsign * exp(factor - 1.5 * M_LN2 - M_LN_SQRT_PI - 3.5 * std::log(q_asq) + erg - ld);
 	}
 	// if large t is better...
 	else
@@ -100,7 +100,7 @@ NEW:
 		return ans;
 	}
 
-	double temp = log(fabs(ans)) + ld;
+	double temp = std::log(std::fabs(ans)) + ld;
 	if (temp < ld) {
 		double check = temp - ld;
 		if (err - check > errziel) {
@@ -150,7 +150,7 @@ int int_ddiff_d(unsigned dim, const double *x, void *p, unsigned fdim, double *r
 	if (t - tau <= 0) retval[0] = 0.0;
 	else {
 		double ldW = dwiener(low_or_up * (t - tau), a, nu, omega, errorW, 0, 1);
-		// double ldW = dwiener_d(low_or_up * (t - tau), a, nu, omega, log(errorW));
+		// double ldW = dwiener_d(low_or_up * (t - tau), a, nu, omega, std::log(errorW));
 
 		double temp2 = 0;
 		if (sv) temp2 = -0.5 * pow(y, 2) - M_LN_SQRT_PI - 0.5 * M_LN2 + log1p(temp) - 2 * log1p(-temp);
@@ -208,7 +208,7 @@ NEW:
 
 	hcubature(1, int_ddiff_d, &params, dim, xmin, xmax, Meval, abstol, reltol, ERROR_INDIVIDUAL, &val, &err);
 // Rprintf("val = %g", val);
-	double logval = log(val);
+	double logval = std::log(val);
 	cnt++;
 	if (cnt == 10) {
 		Rprintf("cnt = 10 %20g%20g%20g%20g%20g\n", t, a, v, w, newerror*.1);
@@ -216,8 +216,8 @@ NEW:
 		return logval;
 	}
 
-	if (log(newerror) - logval > log(myerr)) {
-		newerror = exp(log(myerr)*(1+cnt*0.1) + logval);
+	if (std::log(newerror) - logval > std::log(myerr)) {
+		newerror = exp(std::log(myerr)*(1+cnt*0.1) + logval);
 		goto NEW;
 	}
 
@@ -321,16 +321,16 @@ NEW:
 		return val * exp(-d);
 	}
 
-	double temp = log(fabs(val));
-	if (temp + log(myerr) < log(newerror) && newerror != 1.e-15) {
-			newerror = exp(log(myerr)*(1+cnt*0.1) + temp);
+	double temp = std::log(std::fabs(val));
+	if (temp + std::log(myerr) < std::log(newerror) && newerror != 1.e-15) {
+			newerror = exp(std::log(myerr)*(1+cnt*0.1) + temp);
 			newerror = newerror < 1.e-15 ? 1.e-15 : newerror;
 			goto NEW;
 	}
 	double check = temp + M_LN2 - d;
 
-	if (log(newerror) + check > log(myerr) && newerror != 1.e-15) {
-		double lnewerror = log(myerr)*(1+cnt*0.1) - check;
+	if (std::log(newerror) + check > std::log(myerr) && newerror != 1.e-15) {
+		double lnewerror = std::log(myerr)*(1+cnt*0.1) - check;
 		newerror = exp(lnewerror);
 		newerror = newerror < 1.e-15 ? 1.e-15 : newerror;
 		d = ddiff_d(t, low_or_up, a, v, 0, w, sw, sv, 0, newerror);
@@ -355,7 +355,7 @@ void wiener_comp(double start, double scale, double norm, double alpha, double a
 		h.dh = dtdiff_d(t, -1, a, v, 0.0, w, sw, sv, 0.0, 1.e-7, h.h);
 	}
 if(h.h == -INFINITY) Rprintf("t = %g\n", t);
-	h.h += start + h.x * scale + log(scale) - norm;
+	h.h += start + h.x * scale + std::log(scale) - norm;
 	h.dh = (1.0 + t * h.dh) * scale;
 }
 
@@ -366,15 +366,15 @@ bool compare(point h1, point h2) {
 void initialize_ars(double a, double v, double w, double sw, double sv, double bound, ars_archiv& ars_store) {
 
 	double norm = 0.0, step = 1.0;
-	//			double temp = fmax(0.2, fabs(v)) / a * w;
+	//			double temp = fmax(0.2, std::fabs(v)) / a * w;
 	//			double start = sqrt(temp * temp + 2.25) - 1.5;
-	//			start = log(exp_mean(0, a, v, w) * start / temp);
+	//			start = std::log(exp_mean(0, a, v, w) * start / temp);
 				// based on mode of inverse-Gaussian
 	double t0 = exp_mean(0, a, v, w);
-	double start = log(t0);
+	double start = std::log(t0);
 
 	double scale;
-	if (fabs(v) > 0.1)
+	if (std::fabs(v) > 0.1)
 		scale = sqrt(lower_bound_var(a, v, w)) / 1.0;
 	else {
 		int sign = (v > 0) ? 1 : -1;
@@ -382,14 +382,14 @@ void initialize_ars(double a, double v, double w, double sw, double sv, double b
 	}
 
 	scale = fmax(scale, 0.05);
-	scale = log(t0 + scale) - start;
+	scale = std::log(t0 + scale) - start;
 
 	point begun, one;
 	double ub, lb;
 	point high, low;
 	begun.x = 0.0;
 	wiener_comp(start, scale, norm, begun.x, a, v, w, sw, sv, begun);
-	if (fabs(begun.dh) > 10) { Rprintf("begun %5g%20g%20g%20g\n", begun.dh, a, v, w); }
+	if (std::fabs(begun.dh) > 10) { Rprintf("begun %5g%20g%20g%20g\n", begun.dh, a, v, w); }
 	norm = begun.h; begun.h = 0.0;
 	int sign = begun.dh > 0 ? 1 : -1;
 	// make ldh >2.0 <5.0
@@ -449,7 +449,7 @@ void initialize_ars(double a, double v, double w, double sw, double sv, double b
 
 	h.push_back(one); h.push_back(low); h.push_back(high);
 
-	bound = (log(bound) - start) / scale;
+	bound = (std::log(bound) - start) / scale;
 	if (high.x > bound) {
 		one.x = bound - step;
 		wiener_comp(start, scale, norm, one.x, a, v, w, sw, sv, one);
@@ -492,17 +492,17 @@ void initialize_ars(double a, double v, double w, double sw, double sv, double b
 
 
 bool accept(double logf_t_prop,double c2) {
-	if (c2 <= 0.06385320297074884) Rprintf("hm\n"); // log(5/3) / 16, req. for convergence
-	double z=log(oneuni())+logf_t_prop;
+	if (c2 <= 0.06385320297074884) Rprintf("hm\n"); // std::log(5/3) / 16, req. for convergence
+	double z=std::log(oneuni())+logf_t_prop;
 	double b=-c2;
-	int k=3; double lk=log(1.0*k);
+	int k=3; double lk=std::log(static_cast<double>(k));
 	while (true)  {
 		if (z>b) return false;
 		b=logdiff(b,(lk-c2*k*k));
 		if (z<b) return true;
-		k=k+2; lk=log(1.0*k);
+		k=k+2; lk=std::log(static_cast<double>(k));
 		b=logsum(b,(lk-c2*k*k));
-		k=k+2; lk=log(1.0*k);
+		k=k+2; lk=std::log(static_cast<double>(k));
 	}
 }
 
@@ -527,7 +527,7 @@ double norm_exp_proposal(double drift) {
 		}
 		else {
 			double z = oneuni(); //zc=log1p(-z);
-			double t_prop = t_tilde - log(z) / rate;
+			double t_prop = t_tilde - std::log(z) / rate;
 			double c2 = M_PISQ * t_prop / 8.0;  double f_t_prop = (-c2);
 			if (accept(f_t_prop, c2)) return t_prop;
 		}
@@ -551,14 +551,14 @@ double invnorm(double drift) {
 double invgauss_proposal(double drift) {
     double t_prop, cs, cl;
     if (t_tilde >= 0.63662) { cs = 0.0; cl = -M_LNPI + 2 * M_LN2 - 0.5*(M_LNPI + M_LN2); }
-    else { cl = -M_PISQ / 8.0*t_tilde + 1.5*log(t_tilde) + 1.0 / (2 * t_tilde); cs = cl + 0.5*(M_LNPI + M_LN2) + M_LNPI - 2 * M_LN2; }
+    else { cl = -M_PISQ / 8.0*t_tilde + 1.5*std::log(t_tilde) + 1.0 / (2 * t_tilde); cs = cl + 0.5*(M_LNPI + M_LN2) + M_LNPI - 2 * M_LN2; }
 
     while (true) {
         t_prop = invnorm(drift);
 
 
         if (t_prop <= t_tilde) { if (accept(cs - 1.0 / (2 * t_prop), 1.0 / (2 * t_prop))) return t_prop; }
-        else if (accept(cl - 1 / (2 * t_prop) - 1.5 * log(t_prop), M_PISQ * t_prop / 8)) return t_prop;
+        else if (accept(cl - 1 / (2 * t_prop) - 1.5 * std::log(t_prop), M_PISQ * t_prop / 8)) return t_prop;
     }
 
 }
@@ -566,8 +566,8 @@ double invgauss_proposal(double drift) {
 double rdiffusion(double drift, double a) {
 	// a = threshold separation -> distance of upper/lower to zero = a/2
 	a = a / 2.0; drift = drift * a; double a2 = pow(a, 2);
-	if (fabs(drift) <= 1) return(a2*norm_exp_proposal(fabs(drift)));
-	else return(a2*invgauss_proposal(fabs(drift)));
+	if (std::fabs(drift) <= 1) return(a2*norm_exp_proposal(std::fabs(drift)));
+	else return(a2*invgauss_proposal(std::fabs(drift)));
 }
 
 double rdiffusion_UPbound(double bound, double a, double drift, double w)
@@ -576,9 +576,9 @@ double rdiffusion_UPbound(double bound, double a, double drift, double w)
 START:
 	double x = 0.0, t = 0.0;
 	while (true) {
-		const double xlo = fabs(x - b_lo);
-		const double xup = fabs(x - b_up);
-		if (fabs(xlo - xup) < 1e-5) {
+		const double xlo = std::fabs(x - b_lo);
+		const double xup = std::fabs(x - b_up);
+		if (std::fabs(xlo - xup) < 1e-5) {
 			// symmetric bounds, diffusion model in [x - xup, x + xup]
 			t += rdiffusion(drift, (2 * xup));
 			if (t > bound) goto START;
@@ -616,9 +616,9 @@ double rdiffusion_lower_trunc(double bound, double a, double drift, double w)
 START:
 	double x = 0.0, t = 0.0;
 	while (true) {
-		const double xlo = fabs(x - b_lo);
-		const double xup = fabs(x - b_up);
-		if (fabs(xlo - xup) < 1e-5) {
+		const double xlo = std::fabs(x - b_lo);
+		const double xup = std::fabs(x - b_up);
+		if (std::fabs(xlo - xup) < 1e-5) {
 			// symmetric bounds, diffusion model in [x - xup, x + xup]
 			t += rdiffusion(drift, (2 * xup));
 			if (t > bound) goto START;
@@ -653,7 +653,7 @@ double rwiener_diag2(int pm, double bound, double a, double v, double w, double 
 
 	double qmax = bound;
 	double q = std::isinf(bound) ? 1.0 : bound / 2;
-	double p = log(oneuni());
+	double p = std::log(oneuni());
 
 	double qold;
 
@@ -677,7 +677,7 @@ double rwiener_diag2(int pm, double bound, double a, double v, double w, double 
 			q = std::isinf(qmax) ? q * 2 : qmin + (qmax - qmin) / 2.0;
 		}
 
-	} while (fabs(q - qold) > eps);
+	} while (std::fabs(q - qold) > eps);
 	return(q);
 }
 
@@ -730,7 +730,7 @@ WEITER:
 		goto END;
 	}
 
-	ww = log(oneuni()); tt = fun_upper(k, xstar, upper);  ss = fun_lower(k, xstar, h, lower);
+	ww = std::log(oneuni()); tt = fun_upper(k, xstar, upper);  ss = fun_lower(k, xstar, h, lower);
 
 	if(xstar > 12) Rprintf("ww = %g   tt = %g   ss = %g\n", ww, tt, ss);
 	if (ww <= (ss - tt))  goto STOP;
@@ -766,7 +766,7 @@ NEW:
 // Rprintf("ars hstore length = %d", static_cast<int>(ars_store.hstore.size()));
 	double  scale = ars_store.scalestore;
 
-	double bound2 = (bound == INFINITY) ? bound : (log(bound) - start) / scale;
+	double bound2 = (bound == INFINITY) ? bound : (std::log(bound) - start) / scale;
 
 	//	start = start * scale;
 	temp = arst(ars_store, scale, -INFINITY, start, bound2, a, v, w, sw, sv, wiener_comp);
@@ -914,7 +914,7 @@ void run_make_rwiener(int choice, int N, double a, double v, double w, double sv
 						}
 						q[i] = rdiffusion_UPbound(bound, a, vs, ws);
 						resp[i] = q[i] > 0 ? 2 : 1;
-						if (resp[i] == 1) q[i] = fabs(q[i]);
+						if (resp[i] == 1) q[i] = std::fabs(q[i]);
 					}
 				} else { // not truncated
 					for (int i = 0; i != N; i++) {
@@ -923,7 +923,7 @@ void run_make_rwiener(int choice, int N, double a, double v, double w, double sv
 						if (sw) ws += sw*(oneuni()-0.5);
 						q[i] = rdiffusion_UPbound(bound, a, vs, ws);
 						resp[i] = q[i] > 0 ? 2 : 1;
-						if (resp[i] == 1) q[i] = fabs(q[i]);
+						if (resp[i] == 1) q[i] = std::fabs(q[i]);
 					}
 				}
 			}

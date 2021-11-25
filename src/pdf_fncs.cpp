@@ -2,12 +2,9 @@
 // Chair of Social Psychology, University of Freiburg
 // Authors: Christoph Klauer and Raphael Hartmann
 
-#include "cstdio"
-#include "pdf_fncs.h"
 #include "tools.h"
-#include <Rinternals.h>
+#include "pdf_fncs.h"
 #include <cmath>
-
 
 
 /* DENSITY */
@@ -76,7 +73,7 @@ double dwiener(double q, double a, double vn, double wn, double err, int K, int 
 		v = -vn;
 	}
 	else {
-		q = std::fabs(q);
+		q = fabs(q);
 		w = wn;
 		v = vn;
 	}
@@ -240,7 +237,7 @@ void dadwiener(double q, double a, double vn, double wn, double ld, double *deri
 			v = -vn;
 		}
 		else {
-			q = std::fabs(q);
+			q = fabs(q);
 			w = wn;
 			v = vn;
 		}
@@ -302,7 +299,7 @@ void dvdwiener(double q, double a, double vn, double wn, double ld, double *deri
 			sign = -1;
 		}
 		else {
-			q = std::fabs(q);
+			q = fabs(q);
 			w = wn;
 			v = vn;
 		}
@@ -393,7 +390,7 @@ void dwdwiener(double q, double a, double vn, double wn, double ld, double *deri
 			sign = -1;
 		}
 		else {
-			q = std::fabs(q);
+			q = fabs(q);
 			w = wn;
 			v = vn;
 		}
@@ -566,7 +563,7 @@ void dxdwiener(double q, double a, double vn, double wn, double ld, double err, 
 			sign = -1;
 		}
 		else {
-			q = std::fabs(q);
+			q = fabs(q);
 			w = wn;
 			v = vn;
 		}

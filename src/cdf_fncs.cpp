@@ -15,7 +15,7 @@
 /* P term in the distribution function */
 double logP(int pm, double a, double v, double w) {
 	if (pm == 1) { v = -v; w = 1.0 - w; }
-	if (std::fabs(v) == 0.0) return log1p(-w);
+	if (fabs(v) == 0.0) return log1p(-w);
 
 	double prob;
 	double e = (-2.0 * v * a * (1.0 - w));
@@ -34,7 +34,7 @@ double logP(int pm, double a, double v, double w) {
 /* calculate number of terms needed for short t */
 double Ks(double t, double v, double a, double w, double eps)
 {
-	double K1 = 0.5 * (std::fabs(v) / a * t - w);
+	double K1 = 0.5 * (fabs(v) / a * t - w);
 	double arg = fmax(0, fmin(1, exp(v*a*w + pow(v, 2)*t / 2 + (eps)) / 2));
 	double K2 = (arg==0) ? INFINITY : (arg==1) ? -INFINITY : -sqrt(t) / 2 / a * gsl_cdf_ugaussian_Pinv(arg);
 	return ceil(fmax(K1, K1 + K2));
@@ -76,7 +76,7 @@ double logFs(double t, double v, double a, double w, int K)
 double logFl(double q, double v, double a, double w, int K)
 {
 	double fplus = -INFINITY, fminus = -INFINITY;
-	double la = std::log(a), lv = std::log(std::fabs(v));
+	double la = std::log(a), lv = std::log(fabs(v));
 	double F = -INFINITY;
 	for (int k = K; k >= 1; k--) {
 		double temp0 = std::log(k * 1.0), temp1 = k * M_PI, temp2 = temp1 * w;
@@ -140,7 +140,7 @@ double davlogP(int pm, double a, double v, double w) {
 		v = -v;
 	}
 
-	if (std::fabs(v)==0.0) return(-w);
+	if (fabs(v)==0.0) return(-w);
 
 	if (v < 0) {
 		double emw = (2.0 * v * a * (1.0 - w)), ew = 2 * a * v * w, e = 2 * a * v;
@@ -170,7 +170,7 @@ double davlogP(int pm, double a, double v, double w) {
 			tt = rexp(tt);
 		}
 	}
-	if (std::isfinite(tt)) return(tt);
+	if (R_FINITE(tt)) return(tt);
 	else {
 		Rprintf("dalogprob %20g%20g%20g\n", a, v, w);
 		//std::cout << "dalogprob " << setw(20) << a << setw(20) << v << setw(20) << w << std::endl;
@@ -181,11 +181,11 @@ double davlogP(int pm, double a, double v, double w) {
 
 /* extension for d/da */
 double dalogP(int pm, double a, double v, double w, double dav) {
-	if (std::fabs(v) == 0.0) return 0.0;
+	if (fabs(v) == 0.0) return 0.0;
 	double tt;
 	tt = dav * v;
 	tt = (pm == 1) ? -tt : tt;
-	if (std::isfinite(tt)) return(tt);
+	if (R_FINITE(tt)) return(tt);
 	else {
 		Rprintf("dalogprob %20g%20g%20g\n", a, v, w);
 		//std::cout << "dalogprob " << setw(20) << a << setw(20) << v << setw(20) << w << std::endl;
@@ -212,7 +212,7 @@ void dakL(double q, double a, double v, double w, double err, double &Kal) {
 	double lt = std::log(q), la = std::log(a);
 	double factor = v * a * w + pow(v, 2) * q / 2 + err;
   double K1 = a / M_PI / sqrt(q);
-  double C1 = M_LN2 - logsum(2 * std::log(std::fabs(v)), 2 * (M_LNPI - la)); C1 = logsum(C1, lt);
+  double C1 = M_LN2 - logsum(2 * std::log(fabs(v)), 2 * (M_LNPI - la)); C1 = logsum(C1, lt);
 	double alphka = fmin(factor + M_LNPI + lt + la - M_LN2 - C1, 0.0);
 	Kal = ceil(fmax(fmax(sqrt(-2 * alphka / q) * a / M_PI, K1),1.0));
 }
@@ -336,7 +336,7 @@ void dapwiener(int pm, double q, double a, double v, double w, double lp, double
 double dvlogP(int pm, double a, double v, double w, double dav) {
 	int sign = 1; if (pm == 1) sign = -1;
 	double tt = dav * a * sign;
-	if (std::isfinite(tt)) return(tt); else
+	if (R_FINITE(tt)) return(tt); else
 	{
 		Rprintf("dvlogprob %20g%20g%20g\n", a, v, w);
 		//std::cout << "dvlogprob " << setw(20) << a << setw(20) << v << setw(20) << w << std::endl;
@@ -351,7 +351,7 @@ void dvkS(double q, double a, double v, double w, double err, double &Kvs) {
 	double factor = v * a * w + pow(v, 2) * q / 2 + err;
 	double wdash = fmin(w, 1.0 - w);
 
-	double K1wv = std::fabs(v) / a * q - wdash;
+	double K1wv = fabs(v) / a * q - wdash;
 
 	double alphKv = factor + 0.5 * (M_LN2 - lt + M_LNPI);
 	Kvs = (alphKv < 0) ? sqt * sqrt(-2 * alphKv)/a -  wdash  : 0;
@@ -367,7 +367,7 @@ void dvkL(double q, double a, double v, double w, double err, double &Kvl) {
 
 	if (v == 0) Kvl = 1.0;
 	else {
-		double lv = std::log(std::fabs(v));
+		double lv = std::log(fabs(v));
 		double alphKv = rexp(factor + 0.5 * (7*M_LNPI + lt) - 2.5 * M_LN2 - 3 * la - lv);
 		alphKv = fmax(0.0, fmin(1.0, alphKv));
 		Kvl = fmax(ceil((alphKv == 0) ? INFINITY : (alphKv == 1) ? -INFINITY : temp * gsl_cdf_ugaussian_Pinv(alphKv)), 1.0);
@@ -491,16 +491,16 @@ double dwlogP(int pm, double a, double v, double w) {
 		tt = -1.0;
 	}
 
-	if (std::fabs(v) == 0.0) return -tt / (1.0 - w);
+	if (fabs(v) == 0.0) return -tt / (1.0 - w);
 	if (v < 0) {
 		double e = (2.0 * v * a * (1.0 - w));
-		double temp = M_LN2 + e + std::log(std::fabs(v)) + std::log(a) - log1p(-exp(e));
+		double temp = M_LN2 + e + std::log(fabs(v)) + std::log(a) - log1p(-exp(e));
 		tt *= -exp(temp);
 	}
 	else
 	{
 		double e = -(2.0 * v * a * (1.0 - w));
-		double temp = M_LN2 + std::log(std::fabs(v)) + std::log(a) - log1p(-exp(e));
+		double temp = M_LN2 + std::log(fabs(v)) + std::log(a) - log1p(-exp(e));
 		tt *= -exp(temp);
 	}
 	return tt;
@@ -512,7 +512,7 @@ void dwkS(double q, double a, double v, double w, double err, double &Kws) {
 	double factor = v * a * w + pow(v, 2) * q / 2 + err;
 	double wdash = fmin(w, 1.0 - w);
 
-	double K1wv = std::fabs(v) / a * q - wdash;
+	double K1wv = fabs(v) / a * q - wdash;
 
 	double alphKw = factor  - M_LN2 - lv;
 	double arg = fmin(rexp(alphKw), 1.0);
@@ -647,7 +647,7 @@ void dxkS(double q, double a, double v, double w, double err, double &Kas, doubl
 	double factor = v * a * w + pow(v, 2) * q / 2 + err;
 	double wdash = fmin(w, 1.0 - w);
 
-	double K1wv = std::fabs(v) / a * q - wdash;
+	double K1wv = fabs(v) / a * q - wdash;
 	double K1a = sqt / a - wdash;
 
 
@@ -678,14 +678,14 @@ void dxkL(double q, double a, double v, double w, double err, double &Kal, doubl
 
 	alphKw = fmax(0.0, fmin(1.0, alphKw));
 	if (v == 0) Kvl = 1.0; else {
-		double lv = std::log(std::fabs(v));
+		double lv = std::log(fabs(v));
 		double alphKv = rexp(factor + 0.5 * (7*M_LNPI + lt) - 2.5 * M_LN2 - 3 * la - lv);
 		alphKv = fmax(0.0, fmin(1.0, alphKv));
 		Kvl = fmax(ceil((alphKv == 0) ? INFINITY : (alphKv == 1) ? -INFINITY : temp * gsl_cdf_ugaussian_Pinv(alphKv)), 1.0);
 	}
 
 	double K1 = a / M_PI / sqrt(q);
-	double C1 = M_LN2 - logsum(2 * std::log(std::fabs(v)), 2 * (M_LNPI - la)); C1 = logsum(C1, lt);
+	double C1 = M_LN2 - logsum(2 * std::log(fabs(v)), 2 * (M_LNPI - la)); C1 = logsum(C1, lt);
 	double alphka = fmin(factor + M_LNPI + lt + la - M_LN2 - C1, 0.0);
 	Kal = ceil(fmax(fmax(sqrt(-2 * alphka / q) * a / M_PI, K1),1.0));
 }
@@ -721,14 +721,14 @@ void logdxFs(int pm, int Ksa, int Ksv, int Ksw, double t, double a, double v, do
 		double x = rj - v * t, xsqt = x / sqt;
 		double temp = rexp(dj + logMill(xsqt)), temp2 = exp(dj);
 		if (k <= Ksv) tv1 = -temp * x;
-		if (k <= Kaw) temp3 = temp * (-vt) - sqt * temp2;
+		temp3 = temp * (-vt) - sqt * temp2;
 		if (k <= Ksa) ta1 =  temp3 * (2 * k + w);
 		if (k <= Ksw) tw1 = temp3 * a;
 
 		x = rj + v * t, xsqt = x / sqt;
 		temp = rexp(dj + logMill(xsqt));
 		if (k <= Ksv) tv2 = temp * x;
-		if (k <= Kaw) temp3 = temp * vt - sqt * temp2;
+		temp3 = temp * vt - sqt * temp2;
 		if (k <= Ksa) ta2 = temp3 * (2 * k + w);
 		if (k <= Ksw) tw2 = temp3 * a;
 
@@ -737,14 +737,14 @@ void logdxFs(int pm, int Ksa, int Ksv, int Ksw, double t, double a, double v, do
 		x = rj - v * t, xsqt = x / sqt;
 		temp = rexp(dj + logMill(xsqt)), temp2 = exp(dj);
 		if (k <= Ksv) tv3 = temp * x;
-		if (k <= Kaw) temp3 = temp * (-vt) - sqt * temp2;
+		temp3 = temp * (-vt) - sqt * temp2;
 		if (k <= Ksa) ta3 = -temp3 * (2 * k + 2.0 - w);
 		if (k <= Ksw) tw3 = -temp3 * (-a);
 
 		x = rj + v * t, xsqt = x / sqt;
 		temp = rexp(dj + logMill(xsqt));
 		if (k <= Ksv) tv4 = -temp * x;
-		if (k <= Kaw) temp3 = temp * vt - sqt * temp2;
+		temp3 = temp * vt - sqt * temp2;
 		if (k <= Ksa) ta4 = -temp3 * (2 * k + 2.0 - w);
 		if (k <= Ksw) tw4 = -temp3 * (-a);
 

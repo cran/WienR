@@ -1,5 +1,5 @@
 Package: WienR
-Version: 0.3-0
+Version: 0.3-4
 Title: Derivatives of the First-Passage Time Density and Cumulative
         Distribution Function, and Random Sampling from the (Truncated)
         First-Passage Time Distribution
@@ -38,7 +38,7 @@ Description: First, we provide functions to calculate the partial derivative of 
     "pseudo" adaptive rejection sampler that builds on the first method. For more details see the corresponding help files.
 License: GPL (>= 2)
 Encoding: UTF-8
-RoxygenNote: 7.1.1
-Packaged: 2021-11-24 17:47:30 UTC; fluffy
+RoxygenNote: 7.1.2
+Packaged: 2022-04-15 10:07:02 UTC; fluffy
 Repository: CRAN
-Date/Publication: 2021-11-25 11:50:05 UTC
+Date/Publication: 2022-04-16 00:42:28 UTC

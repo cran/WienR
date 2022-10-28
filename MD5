@@ -1,4 +1,4 @@
-883757c7a8d1586de1c599143eba053b *DESCRIPTION
+fd21afdc3f72be2dcd239a3fe0ce8830 *DESCRIPTION
 6e548e5e2b0c8b89cb2dc622c9ca0764 *NAMESPACE
 5f3d0a3eb9bba8fb4150dcbd11bce4b3 *R/WienerDens.R
 b3408b2d52255f1d737b471ca6f580a0 *R/WienerDist.R
@@ -20,8 +20,8 @@ f3e8ceec9dfc728f831fdc4f2e3dc97e *R/dwWienerDist.R
 559b970893effe0e616cb1c0a1d56278 *R/dxWienerDens.R
 3d9225b82edd0002448529b4f9d4b949 *R/dxWienerDist.R
 0ca79c3b74758e73417504f1276d0462 *R/print_Wiener.R
-e7251f26d8f1be914d33e2ea58e8a234 *R/sampWiener.R
-6c18a781f2ed47aa66498d17b429cdaf *build/partial.rdb
+494375adee42e6c9f76024b35d205920 *R/sampWiener.R
+670ffd0b2a1b46d6608b6275444639e5 *build/partial.rdb
 d54e9cfea8a1c4f689c0b9dfb8799677 *inst/CITATION
 4492e22787b615083f50b44da7fd64e8 *man/WienerCDF.Rd
 f89bfbfba754924d9352e1a4d1ed700f *man/WienerPDF.Rd
@@ -45,8 +45,8 @@ e8a090acdc30ea70129ad597654a929f *man/gradWienerPDF.Rd
 df2780434e72dff2ca269d890c599c06 *man/sampWiener.Rd
 e7a85cde84e0608bb64bfa899e003354 *src/Makevars
 e7a85cde84e0608bb64bfa899e003354 *src/Makevars.win
-3528ab90f2a99c992ea8c444d34465ad *src/R_wrapper.cpp
-a90234820b43354cd2f30fad924ea0b6 *src/WienR_init.c
+0cc2966c656a524de1a8b53eaee04f73 *src/R_wrapper.cpp
+4163493d1ff421df74aa23b6d5b8ae69 *src/WienR_init.c
 a2698279370ad4d2d68d394ecbbb3d4e *src/cdf_fncs.cpp
 6e1e1d510ba3448da6a523249ede84d8 *src/cdf_fncs.h
 40df57adc0b0db3e3b977f6750c9ea75 *src/derivs.cpp
@@ -55,11 +55,11 @@ e3cbcdc60c338847b808a15f6032a28a *src/fncs_seven.cpp
 5fd78e55eff346d36c5a359f67e87597 *src/fncs_seven.h
 eac7dcd24434ef9beff09f50463400fb *src/gauss.h
 b0aa146e35e1c72a6dc493554402ba6d *src/hcubature.cpp
-e6823e08cfb18c59a420c8384a441ca5 *src/methods.cpp
-f7470b42c16351f13c2e5059958a20a1 *src/methods.h
+d9dd11ad78d266185968bab1a492a4db *src/methods.cpp
+ebd4c831bf3a33749d73eb002895d2ca *src/methods.h
 d9eb6474a61ba9b54133a2544c09a32f *src/pdf_fncs.cpp
 3d7979509b5f737226da793651aa0b2b *src/pdf_fncs.h
-058c980c51ed61b089d0a643b769054e *src/rwiener.cpp
-b3d37d1398511f581b4890ff05cff805 *src/rwiener.h
+429fcf9f975fae1eca0948d5e8bfb4ea *src/rwiener.cpp
+59927afaf4f6d92ba7ef3a6f969dbc16 *src/rwiener.h
 fa8dda1ef0815469816120778727dc1c *src/tools.cpp
 2e5c2662e7fa0b0bf3198b1ddb6fa75c *src/tools.h

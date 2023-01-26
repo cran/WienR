@@ -132,7 +132,7 @@ sampWiener <- function(N,
   
   # bound checks
   if(bound <= t0) stop("bound must be larger thatn t0")
-  if(bound > 0 & st0 > 0) {
+  if(bound > 0 & !is.infinite(bound) & st0 > 0) {
     if(method != "rs") {
       warning(paste0("sampling from truncated distribution with st0>0 not (yet) implemented for method \"", method, "\". Method = \"rs\" is used instead."))
       method = "rs"

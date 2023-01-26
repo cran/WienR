@@ -1,4 +1,4 @@
-fd21afdc3f72be2dcd239a3fe0ce8830 *DESCRIPTION
+6fda48d0a07e6a3b96c23e6af6a108e3 *DESCRIPTION
 6e548e5e2b0c8b89cb2dc622c9ca0764 *NAMESPACE
 5f3d0a3eb9bba8fb4150dcbd11bce4b3 *R/WienerDens.R
 b3408b2d52255f1d737b471ca6f580a0 *R/WienerDist.R
@@ -20,8 +20,8 @@ f3e8ceec9dfc728f831fdc4f2e3dc97e *R/dwWienerDist.R
 559b970893effe0e616cb1c0a1d56278 *R/dxWienerDens.R
 3d9225b82edd0002448529b4f9d4b949 *R/dxWienerDist.R
 0ca79c3b74758e73417504f1276d0462 *R/print_Wiener.R
-494375adee42e6c9f76024b35d205920 *R/sampWiener.R
-670ffd0b2a1b46d6608b6275444639e5 *build/partial.rdb
+e8a8c94b82acc5db33941da0026041fa *R/sampWiener.R
+a37e4ce9bd3c7f9750f6d850262aa19c *build/partial.rdb
 d54e9cfea8a1c4f689c0b9dfb8799677 *inst/CITATION
 4492e22787b615083f50b44da7fd64e8 *man/WienerCDF.Rd
 f89bfbfba754924d9352e1a4d1ed700f *man/WienerPDF.Rd

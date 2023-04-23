@@ -2,9 +2,26 @@
 % Please edit documentation in R/WienerDist.R
 \name{WienerCDF}
 \alias{WienerCDF}
+\alias{pWDM}
 \title{First-passage time cumulative distribution function of the diffusion model}
 \usage{
 WienerCDF(
+  t,
+  response,
+  a,
+  v,
+  w,
+  t0 = 0,
+  sv = 0,
+  sw = 0,
+  st0 = 0,
+  precision = NULL,
+  K = NULL,
+  n.threads = FALSE,
+  n.evals = 6000
+)
+
+pWDM(
   t,
   response,
   a,
@@ -70,6 +87,7 @@ Calculates the first-passage time cumulative distribution function of the diffus
 }
 \examples{
 WienerCDF(t = 1.2, response = "upper", a = 1.1, v = 13, w = .6, precision = NULL, K = NULL)
+pWDM(t = 1.2, response = "upper", a = 1.1, v = 13, w = .6, precision = NULL, K = NULL)
 }
 \references{
 Blurton, S. P., Kesselmeier, M., & Gondan, M. (2012). Fast and accurate calculations for cumulative first-passage time distributions in Wiener diffusion models. \emph{Journal of Mathematical Psychology, 56(6)}, 470–475. \doi{10.1016/j.jmp.2012.09.002}

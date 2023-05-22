@@ -1,4 +1,4 @@
-0c98d030064707d9cc4e400211f567fc *DESCRIPTION
+4c12fb758748aab5c47255936812afc7 *DESCRIPTION
 c0ba2546469c0c1b6823cee553b92215 *NAMESPACE
 5bbec4bb2cc947afcc894efed517dffa *R/WienerDens.R
 19394dc9ea19bae2cbb1fa901158e9c7 *R/WienerDist.R
@@ -22,7 +22,7 @@ f3e8ceec9dfc728f831fdc4f2e3dc97e *R/dwWienerDist.R
 3d9225b82edd0002448529b4f9d4b949 *R/dxWienerDist.R
 0ca79c3b74758e73417504f1276d0462 *R/print_Wiener.R
 871903dbaebaef1775d386a8714db3c2 *R/sampWiener.R
-cbb6ff26a2a09fe918c4a304e22a5d55 *build/partial.rdb
+71da4cc921db0b41e738e7c8caf1a7ab *build/partial.rdb
 5be67333a99ff56601298e7a9a77ad0a *man/WienerCDF.Rd
 7f47558f609781109b9b05c2dfdd19d8 *man/WienerPDF.Rd
 5cdcf2c91e77c15562c4afa998a8d1c6 *man/daWienerCDF.Rd
@@ -57,11 +57,11 @@ e3cbcdc60c338847b808a15f6032a28a *src/fncs_seven.cpp
 5fd78e55eff346d36c5a359f67e87597 *src/fncs_seven.h
 eac7dcd24434ef9beff09f50463400fb *src/gauss.h
 b0aa146e35e1c72a6dc493554402ba6d *src/hcubature.cpp
-d9dd11ad78d266185968bab1a492a4db *src/methods.cpp
+30a9c4c5dba8757b0f9fa63ec9f4a268 *src/methods.cpp
 ebd4c831bf3a33749d73eb002895d2ca *src/methods.h
 d9eb6474a61ba9b54133a2544c09a32f *src/pdf_fncs.cpp
 3d7979509b5f737226da793651aa0b2b *src/pdf_fncs.h
 429fcf9f975fae1eca0948d5e8bfb4ea *src/rwiener.cpp
 59927afaf4f6d92ba7ef3a6f969dbc16 *src/rwiener.h
-fa8dda1ef0815469816120778727dc1c *src/tools.cpp
+7a3b8264e5ee79e59baba68c660691a7 *src/tools.cpp
 2e5c2662e7fa0b0bf3198b1ddb6fa75c *src/tools.h

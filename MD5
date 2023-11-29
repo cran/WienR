@@ -1,4 +1,4 @@
-20dbd525f05404cee3589ef73eacfe0a *DESCRIPTION
+ef34e2986ff420797e75f53db2cf28fa *DESCRIPTION
 c0ba2546469c0c1b6823cee553b92215 *NAMESPACE
 25b8dec569cfc339830c76959883cadf *R/WienerDens.R
 2346a8d4042c47f794b0d0e566230213 *R/WienerDist.R
@@ -22,7 +22,7 @@ f987249563ab9712e64a11ad9d4fbd3e *R/dt0WienerDens.R
 94e68bcf9a44c2fdf88ad991cc500a96 *R/dxWienerDist.R
 0ca79c3b74758e73417504f1276d0462 *R/print_Wiener.R
 871903dbaebaef1775d386a8714db3c2 *R/sampWiener.R
-9b13f8ad0e7e238781789cd0da1a9410 *build/partial.rdb
+8faf250d78a120ba4c7ea2186efddd24 *build/partial.rdb
 5be67333a99ff56601298e7a9a77ad0a *man/WienerCDF.Rd
 7f47558f609781109b9b05c2dfdd19d8 *man/WienerPDF.Rd
 5cdcf2c91e77c15562c4afa998a8d1c6 *man/daWienerCDF.Rd
@@ -45,13 +45,13 @@ b16e5006ddf0d454c2d6307425d7b3ff *man/dvWienerPDF.Rd
 bbaf38f514b0000a1c9798c4f99c3252 *man/gradWienerCDF.Rd
 e8a090acdc30ea70129ad597654a929f *man/gradWienerPDF.Rd
 3c210cc1712576935077da48edb234fa *man/sampWiener.Rd
-e7a85cde84e0608bb64bfa899e003354 *src/Makevars
-e7a85cde84e0608bb64bfa899e003354 *src/Makevars.win
+2dad19a2a703b5990ec314db412d259e *src/Makevars
+2dad19a2a703b5990ec314db412d259e *src/Makevars.win
 03b8656b249b17935f0bc27893452c7d *src/R_wrapper.cpp
 3a72b54d6ef589dfe58b95b72f08e1a5 *src/WienR_init.c
 8d6c14027c07951cc6348c6a88fc115d *src/cdf_fncs.cpp
 6e1e1d510ba3448da6a523249ede84d8 *src/cdf_fncs.h
-2cc2dfde5e4585a95fa5e62f7f16776e *src/derivs.cpp
+d434c3ebb05b126ae721612dcbb2ca8c *src/derivs.cpp
 ede1491382dfd7953e890bb2f6db1a86 *src/derivs.h
 0d09a209b80e056429654ab9d566ed29 *src/fncs_seven.cpp
 5fd78e55eff346d36c5a359f67e87597 *src/fncs_seven.h

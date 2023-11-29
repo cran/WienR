@@ -312,7 +312,7 @@ void dwPDF(double *t, double *a, double *v, double *w, double *sv, double eps, i
 
   /* derivative of PDF with respect to sv */
 void dsvPDF(double *t, double *a, double *v, double *w, double *sv, double eps, int *resp, int K, int N, int epsFLAG, double *Rderiv, int NThreads) {
-  
+
   if (NThreads) {
     /* prepare threads */
     int maxThreads = std::thread::hardware_concurrency();
@@ -321,7 +321,7 @@ void dsvPDF(double *t, double *a, double *v, double *w, double *sv, double eps, 
     int AmntOfThreads = suppThreads > NThreads ? NThreads : suppThreads;
     int NperThread = N / AmntOfThreads;
     std::vector<std::thread> threads(AmntOfThreads-1);
-    
+
     /* calculate derivative with parallelization */
     for (int j = 0; j < AmntOfThreads-1; j++) {
       threads[j] = std::thread([=]() {
@@ -332,18 +332,18 @@ void dsvPDF(double *t, double *a, double *v, double *w, double *sv, double eps, 
         }
       });
     }
-    
+
     int last = NperThread * (AmntOfThreads-1);
     for (int i = last; i < N; i++) {
       double pm = (resp[i]==1) ? 1.0 : -1.0;
       double ld = dwiener(t[i]*pm, a[i], v[i], w[i], sv[i], eps, K, epsFLAG);
       dsvdwiener(t[i]*pm, a[i], v[i], w[i], sv[i], ld, &Rderiv[i], eps, K, epsFLAG);
     }
-    
+
     for (int j = 0; j < AmntOfThreads-1; j++) {
       threads[j].join();
     }
-    
+
   } else {
     /* calculate derivative without parallelization */
     for(int i = 0; i < N; i++) {
@@ -353,7 +353,7 @@ void dsvPDF(double *t, double *a, double *v, double *w, double *sv, double eps, 
       dsvdwiener(t[i]*pm, a[i], v[i], w[i], sv[i], ld, &Rderiv[i], eps, K, epsFLAG);
     }
   }
-  
+
 }
 /* ------------------------------------------------ */
 
@@ -895,7 +895,6 @@ void dxPDF7(double *t, int *resp, double *a, double *v, double *t0, double *w, d
         else Rdsv[i] = NAN;
         if (st[0]) ddiff(7, t[i], low_or_up, a[i], v[i], t0[i], w[i], sw[i], sv[i], st[i], err, K, epsFLAG, Neval, &Rdst[i], &Rerr[i]);
         else Rdst[i] = NAN;
-        Rprintf("");
       }
     }
 
@@ -980,7 +979,7 @@ void dxCDF7(double *t, int *resp, double *a, double *v, double *t0, double *w, d
 
 /* Quantile of Wiener diffusion */
 void quantile(double *t, double *a, double *v, double *w, double eps, int *resp, int K, int N, int epsFLAG, double *Rcdf, double *Rlogcdf, int NThreads) {
-  
+
   if (NThreads) {
     /* prepare threads */
     int maxThreads = std::thread::hardware_concurrency();
@@ -989,7 +988,7 @@ void quantile(double *t, double *a, double *v, double *w, double eps, int *resp,
     int AmntOfThreads = suppThreads > NThreads ? NThreads : suppThreads;
     int NperThread = N / AmntOfThreads;
     std::vector<std::thread> threads(AmntOfThreads-1);
-    
+
     /* calculate derivative with parallelization */
     for (int j = 0; j < AmntOfThreads-1; j++) {
       threads[j] = std::thread([=]() {
@@ -1002,7 +1001,7 @@ void quantile(double *t, double *a, double *v, double *w, double eps, int *resp,
         }
       });
     }
-    
+
     int last = NperThread * (AmntOfThreads-1);
     for (int i = last; i < N; i++) {
       // int pm = (resp[i]==1) ? 1 : -1;
@@ -1011,11 +1010,11 @@ void quantile(double *t, double *a, double *v, double *w, double eps, int *resp,
       // Rlogcdf[i] = lp;
       // Rcdf[i] = exp(lp);
     }
-    
+
     for (int j = 0; j < AmntOfThreads-1; j++) {
       threads[j].join();
     }
-    
+
   } else {
     /* calculate derivative without parallelization */
     for(int i = 0; i < N; i++) {
@@ -1027,6 +1026,6 @@ void quantile(double *t, double *a, double *v, double *w, double eps, int *resp,
       // Rcdf[i] = exp(lp);
     }
   }
-  
+
 }
 /* ------------------------------------------------ */

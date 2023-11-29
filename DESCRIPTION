@@ -1,5 +1,5 @@
 Package: WienR
-Version: 0.3-14
+Version: 0.3-15
 Title: Derivatives of the First-Passage Time Density and Cumulative
         Distribution Function, and Random Sampling from the (Truncated)
         First-Passage Time Distribution
@@ -39,6 +39,6 @@ Description: First, we provide functions to calculate the partial derivative of 
 License: GPL (>= 2)
 Encoding: UTF-8
 RoxygenNote: 7.1.2
-Packaged: 2023-07-02 00:35:29 UTC; fluffy
+Packaged: 2023-11-28 14:52:09 UTC; hartmann
 Repository: CRAN
-Date/Publication: 2023-07-04 11:43:15 UTC
+Date/Publication: 2023-11-29 11:20:15 UTC
